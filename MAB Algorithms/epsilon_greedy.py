@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def epsilon_greedy_algorithm(df, arms, epsilon=0.15, n_recommendations):
+def epsilon_greedy_algorithm(df, arms, n_recommendations, epsilon=0.15):
     
     #First, we have to chose if which arms we are going for, we will use a bernoulli :
     selector = np.random.binomial(1, epsilon)
@@ -30,16 +30,16 @@ def policy_evaluator_epsilon(dataframe, epsilon_value = 0.15):
     arms = dataframe['movie_id'].unique().tolist()
     # We initialize an empty history
     history = pd.DataFrame([], columns = dataframe.columns)
-    # We stock the rewards in a list
-    rewards = []
+    # We stock the payoffs in a list
+    payoffs = []
     for t in range(len(dataframe)):
         # We check our t-th row
         t_event = dataframe[t : t + 1]
-        # If the movie recommended matches the movie of our dataframe, we update our history and our reward
+        # If the movie recommended matches the movie of our dataframe, we update our history and our payoffs
         if epsilon_greedy_algorithm(history, arms, epsilon=epsilon_value, n_recommendations=1) == t_event['movie_id'].iloc[0] :
             history.loc[len(history)] = t_event.iloc[0].to_list()
-            rewards.append(t_event['binary_rating'].iloc[0])
-    return rewards
+            payoffs.append(t_event['binary_rating'].iloc[0])
+    return payoffs
 
 def block_policy_evaluator_epsilon(dataframe, epsilon_value = 0.15, block_size=50):
     # We get the list of the arms (the movies)
