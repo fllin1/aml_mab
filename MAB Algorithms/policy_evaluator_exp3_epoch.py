@@ -15,11 +15,11 @@ def EXP_3(t_event, w, eta, arms, N):
     if arms[A_t] == t_event['movie_id'].iloc[0]:
         l_hat = (1 - t_event['rating'].iloc[0]) / Probas[A_t]
         w[A_t] = w[A_t]*np.exp( -eta * l_hat/N )
-        
+    
     return (arms[A_t],w)
 
 
-def policy_evaluator_EXP3(dataframe, eta, loops):
+def policy_evaluator_EXP3(dataframe, eta, epochs):
     print('exp3 begins')
     # We get the list of the arms (the movies)
     arms = dataframe['movie_id'].unique().tolist()
@@ -28,9 +28,9 @@ def policy_evaluator_EXP3(dataframe, eta, loops):
     # We stock the payoffs in a list
     payoffs = []
     
-    for loop in range(loops):
+    for epoch in range(epochs):
         
-        if loop == 0:
+        if epoch == 0:
             # Start with filtered data first
             data = dataframe.copy()
             # Initiate unused_data list
@@ -42,7 +42,7 @@ def policy_evaluator_EXP3(dataframe, eta, loops):
             # Initiate unused_data list
             unused_data = []
             
-        print('Epoch ',loop )
+        print('Epoch ',epoch )
         # We keep track of our progression
         decile = len(data)/10
         pourcent = 10

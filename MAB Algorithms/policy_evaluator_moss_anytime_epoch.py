@@ -1,54 +1,53 @@
 import pandas as pd
 import numpy as np
 
-def policy_evaluator_moss_anytime_min(dataframe, alpha, loops):
+def policy_evaluator_moss_anytime_min(dataframe, alpha, epochs):
     print('moss anytime begins')
+    
     # We stock the payoffs in a list
     payoffs = []
+    # We pull each arm once to initialize history
+    history = dataframe.groupby('movie_id').first()
     arms = dataframe['movie_id'].unique()
     n_arms = len(arms)
-    if len(history) <= 1:
-        # We pull each arm once to initialize history
-        history = dataframe.groupby('movie_id').first()
-        history['movie_id'] = history.index
-        # We drop the rows associated to the initial pull
-        rows_to_drop = history['time']
-        history['time'] = 0
-        history.reset_index(drop=True, inplace=True)
-        history = history[dataframe.columns]
-        dataframe.drop(rows_to_drop, inplace=True)
-    
-    dataframe.reset_index(drop=True, inplace=True)
-    dataframe['time'] = dataframe.index
+    history['movie_id'] = history.index
+    # We drop the rows associated to the initial pull
+    rows_to_drop = history['time']
+    history['time'] = 0
+    history.reset_index(drop=True, inplace=True)
+    history = history[dataframe.columns]
+    dataframe_copy = dataframe.copy()
+    dataframe_copy.drop(rows_to_drop, inplace=True)
+    dataframe_copy.reset_index(drop=True, inplace=True)
+    dataframe_copy['time'] = dataframe_copy.index
 
-    for loop in range(loops):
+    for epoch in range(epochs):
         
-        if loop == 0:
-            # Start with filtered data first
-            data = dataframe.copy()
+        if epoch == 0:
             # Initiate unused_data list
             used_data_index = []
         
         else:
             # Recycle unused data
-            data = pd.DataFrame(data.drop(used_data_index), columns = dataframe.columns)
+            dataframe_copy.drop(used_data_index, inplace = True)
             # Initiate unused_data list
             used_data_index = []
             
-        print('Epoch ',loop )
-        # We keep track of our progression
-        decile = len(data)/10
+        print('Epoch ',epoch )
+        # We initialize our quantities to keep track of our progression
+        decile = len(dataframe_copy)/10
         pourcent = 10
             
-        for t in range(len(data)):
+        for t in range(1, len(dataframe_copy) + 1):
             
+            # We keep track of our progression
             if t > decile:
                 print(f'progression : {pourcent} %')
-                decile += len(data)/10
+                decile += len(dataframe_copy)/10
                 pourcent += 10
-                
+            
             # We get t-th row of our dataframe
-            t_event = dataframe[t-1:t]
+            t_event = dataframe_copy[t-1:t]
             # We get the recommendation of our algorithm
             # The groupby allows to get s without adding a dictionary. It also allows us to not have a loop over each arm.
             objective_function = history[['movie_id', 'binary_rating']].groupby('movie_id').agg({'binary_rating': ['mean', 'count']})
@@ -62,6 +61,5 @@ def policy_evaluator_moss_anytime_min(dataframe, alpha, loops):
                 history.loc[len(history)] = t_event.iloc[0].to_list()
                 payoffs.append(t_event['binary_rating'].iloc[0])
                 used_data_index.append(t)
-
 
     return payoffs
