@@ -17,5 +17,7 @@ https://grouplens.org/datasets/movielens/1m/
 
 ## How to recreate the plots for the big DataSet (6 millions observations after processing)
 This section concerns the plots for the Epsilon Greedy, MOSS Anytime and EXP3 algorithms.
+
 Simply open the notebook "plots_for_20M.ipynb" in the file "Plot Big Data" and run all cells, it will plot the graphs and their respective csv in the same file. You can chose the number of epochs by changing the parameter "loops" for the MOSS Anytime and EXP3 algorithms.
+
 Our plots can be found in the "Plot Big Data/results" file.
