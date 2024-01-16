@@ -31,20 +31,20 @@ We have implementend a policy evaluation that takes into account the fact that s
 
 ## What contains this repository
 
+Everytime a file contains the mention "big data", it indicates that it was intended for our bigger data base, and it was adapted from their respective file that doesn't contain the mention.
+
 * Data : It contains the raw data (.dat files) and the processed dataset (dataset_1000_minimum_reviews.csv).
+  * respectively Big Data : It contains the raw data (ratings.csv) and the processed dataset (big_dataset_20000_minimum_reviews.csv).
 * MAB Algorithms : It contains the code about each algorithm and the policy evaluator for each of them. It also allows us to keep in memory the list of algorithms rewards.
+  * respectively MAB Algorithms Big Data : There are only slight differences between these and the previous files, like the mention "_epoch" when epoches were added
 * Plots : It contains the datasets and plots (in the Images folder) about all the cumulative evaluations of each algorithm and some describing charts related to the dataset. The plots in the Images folder are obtained by running data plot.ipynb and algorithms_plots.ipynb.
-* Processing : It contains the notebook about how we processed our data in order to obtain our working dataset (dataset_1000_minimum_reviews.csv).
+  * respectively Plots Big Data : the plots were realized only for what seemed like the optimal parameters
+* Processing : It contains the notebook about how we processed both out datas in order to obtain our working dataset (dataset_1000_minimum_reviews.csv and big_dataset_20000_minimum_reviews.csv).
 
 ## How to reproduce the code
 
-* Generate the processed dataset : Go to the Processing folder and open the processing notebook. Just follow the instructions in the notebook, all the processing is explained. The raw data and the processed dataset (dataset_1000_minimum_reviews.csv) are in the Data folder.
-* Get the list of cumulative evaluations of each algorithm : Run the different simulations notebook in the MAB Algorithms folder. The list of cumulative evaluations are stored in the Plots/Data folder.
+The following steps are similar if you want to work on either the big or small datasets.
+
+* Generate the processed dataset : Go to the Processing folder and open the processing notebook. Just "Run All" or follow the instructions in the notebook, all the processing is explained. The raw data and the processed dataset (dataset_1000_minimum_reviews.csv/ big_dataset_20000_minimum_reviews.csv) are in the Data (resp. Big Data) folder.
+* Get the list of cumulative evaluations of each algorithm : Run the different simulations notebook in the MAB Algorithms (resp. MAB Algorithms Big Data) folder. The list of cumulative evaluations are stored in the Plots\Data (resp. Plots Big Data\Data) folder.
 * Get all the different plots : Run the data plot.ipynb and algorithms_plots.ipynb in the Plots folder.
-
-## How to recreate the plots for the big DataSet (6 millions observations after processing)
-This section concerns the plots for the Epsilon Greedy, MOSS Anytime and EXP3 algorithms.
-
-Simply open the notebook "plots_for_20M.ipynb" in the file "Plot Big Data" and run all cells, it will plot the graphs and their respective csv in the same file. You can chose the number of epochs by changing the parameter "loops" for the MOSS Anytime and EXP3 algorithms.
-
-Our plots can be found in the "Plot Big Data/results" file.
