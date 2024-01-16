@@ -1,4 +1,4 @@
-# aml_mab
+# Around the Multi-Armed Bandit Problem
 
 ## DataSet
 https://grouplens.org/datasets/movielens/1m/
