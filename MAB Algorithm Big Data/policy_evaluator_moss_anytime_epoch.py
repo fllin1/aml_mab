@@ -33,7 +33,7 @@ def policy_evaluator_moss_anytime_min(dataframe, alpha, epochs):
             # Initiate unused_data list
             used_data_index = []
             
-        print('Epoch ',epoch )
+        print('Epoch ',epoch+1 )
         # We initialize our quantities to keep track of our progression
         decile = len(dataframe_copy)/10
         pourcent = 10
