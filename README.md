@@ -29,6 +29,19 @@ Our evaluation on each algorithm is based on a policy evaluation for finite data
 We have slightly modified the policy_evaluator in the paper. We consideer payoffs as a list containing all the payoffs value instead of a single number to be able to plot the cumulative average of our payoffs, we then don't need to add the parameter T as it will be the len of payoffs.
 We have implementend a policy evaluation that takes into account the fact that several arms can maximize the mean, thus we need to choose on arm. Two rules are possible and popular : choosing an arm randomly or choosing the arm with the lowest ID. There were no big differences between both algorithm, we have thus decided to keep the lowest ID rule.
 
+## What contains this repository
+
+* Data : It contains the raw data (.dat files) and the processed dataset (dataset_1000_minimum_reviews.csv).
+* MAB Algorithms : It contains the code about each algorithm and the policy evaluator for each of them. It also allows us to keep in memory the list of algorithms rewards.
+* Plots : It contains the datasets and plots (in the Images folder) about all the cumulative evaluations of each algorithm and some describing charts related to the dataset. The plots in the Images folder are obtained by running data plot.ipynb and algorithms_plots.ipynb.
+* Processing : It contains the notebook about how we processed our data in order to obtain our working dataset (dataset_1000_minimum_reviews.csv).
+
+## How to reproduce the code
+
+* Generate the processed dataset : Go to the Processing folder and open the processing notebook. Just follow the instructions in the notebook, all the processing is explained. The raw data and the processed dataset (dataset_1000_minimum_reviews.csv) are in the Data folder.
+* Get the list of cumulative evaluations of each algorithm : Run the different simulations notebook in the MAB Algorithms folder. The list of cumulative evaluations are stored in the Plots/Data folder.
+* Get all the different plots : Run the data plot.ipynb and algorithms_plots.ipynb in the Plots folder.
+
 ## How to recreate the plots for the big DataSet (6 millions observations after processing)
 This section concerns the plots for the Epsilon Greedy, MOSS Anytime and EXP3 algorithms.
 
