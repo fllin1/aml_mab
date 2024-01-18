@@ -10,6 +10,15 @@ def EXP_3_Tuned(t_event, w, eta, arms, N, rho, T):
     for a in range(N):
         P_a = (1-eta)*w[a]/W_t + eta/N
         Probas.append(P_a)
+    # Probas might not sum up to 1 even though it should always, just in case we normalize it
+    # Since we are working on a much bigger dataset, that actually occurs quite often
+    if sum(Probas) != 1:
+        Probas = (np.array(Probas)/np.sum(Probas)).tolist()
+        # As that might not correct the issue, we directly tweak a tiny bit with the data randomly
+        if sum(Probas) != 1:
+            victim = np.random.randint(0,len(Probas))
+            Probas[victim] += 1 - sum(Probas)
+    
     A_t = np.random.choice(np.arange(N, dtype = int) , p = Probas)
     if arms[A_t] == t_event['movie_id'].iloc[0]:
         l_hat = (1 - t_event['rating'].iloc[0]) / Probas[A_t]

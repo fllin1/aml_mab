@@ -64,10 +64,10 @@ def policy_evaluator_epsilon_min(dataframe, epsilon_value, epochs):
                 print(f'progression : {pourcent} %')
                 decile += len(dataframe)/10
                 pourcent += 10
-        # We check our t-th row
-        t_event = dataframe[t : t + 1]
-        # If the movie recommended matches the movie of our dataframe, we update our history and our payoffs
-        if epsilon_greedy_algorithm_min(history, arms, epsilon=epsilon_value, n_recommendations=1) == t_event['movie_id'].iloc[0] :
-            history.loc[len(history)] = t_event.iloc[0].to_list()
-            payoffs.append(t_event['binary_rating'].iloc[0])
+            # We check our t-th row
+            t_event = dataframe[t : t + 1]
+            # If the movie recommended matches the movie of our dataframe, we update our history and our payoffs
+            if epsilon_greedy_algorithm_min(history, arms, epsilon=epsilon_value, n_recommendations=1) == t_event['movie_id'].iloc[0] :
+                history.loc[len(history)] = t_event.iloc[0].to_list()
+                payoffs.append(t_event['binary_rating'].iloc[0])
     return payoffs
