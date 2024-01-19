@@ -32,6 +32,7 @@ def policy_evaluator_moss_min(dataframe, epochs):
         else:
             # Recycle unused data
             dataframe_copy.drop(used_data_index, inplace = True)
+            dataframe_copy.reset_index(drop=True, inplace=True)
             # Initiate unused_data list
             used_data_index = []
             
